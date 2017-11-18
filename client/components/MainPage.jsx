@@ -8,33 +8,92 @@ export default class MainPage extends React.Component {
         console.log('hi main');
     }
 
+    generateRandomArray() {
+        var array = [];
+        for (var i = 0; i < 4; i++) {
+            array.push(Math.floor((Math.random() * 100)));
+        }
+        console.log(array);
+        return array;
+    }
+
+    generateRandomNumber() {
+        return Math.floor((Math.random() * 100));
+    }
+
     componentDidMount() {
-        console.log('hi main');
-        var ctx = this.refs.myChart.getContext('2d');
+        var ctx = this.refs.firstChart.getContext('2d');
         var chart = new Chart(ctx, {
             // The type of chart we want to create
             type: 'line',
 
             // The data for our dataset
             data: {
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                labels: ["morning", "noon", "afternoon", "evening"],
                 datasets: [{
-                    label: "My First dataset",
+                    fill: false,
+                    label: "😂",
                     backgroundColor: 'rgb(255, 99, 132)',
                     borderColor: 'rgb(255, 99, 132)',
-                    data: [0, 10, 5, 2, 20, 30, 45],
+                    data: this.generateRandomArray(),
+                },
+                {
+                    fill: false,
+                    label: "😎",
+                    backgroundColor: 'rgb(0, 0, 255)',
+                    borderColor: 'rgb(0, 0, 255)',
+                    data: this.generateRandomArray(),
+                }, {
+                    fill: false,
+                    label: "🤓",
+                    backgroundColor: 'rgb(255, 255, 0)',
+                    borderColor: 'rgb(255, 255, 0)',
+                    data: this.generateRandomArray(),
+                }, {
+                    fill: false,
+                    label: "😇",
+                    backgroundColor: 'rgb(0, 102, 102)',
+                    borderColor: 'rgb(0, 102, 102)',
+                    data: this.generateRandomArray(),
+                }, {
+                    fill: false,
+                    label: "😘",
+                    backgroundColor: 'rgb(204, 0, 153)',
+                    borderColor: 'rgb(204, 0, 153)',
+                    data: this.generateRandomArray(),
                 }]
             },
 
             // Configuration options go here
             options: {}
         });
-    } 
+
+        var ctx = this.refs.secondChart.getContext('2d');
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'radar',
+
+            // The data for our dataset
+            data: {
+                labels: ["😂", "😎", "🤓", "😇", "😘"],
+                datasets: [{
+                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: this.generateRandomArray()
+                }]
+            },
+
+            // Configuration options go here
+            options: { legend: { display: false } }
+        });
+    }
     render() {
         return (
             <div>
-                Hello world
-                <canvas ref="myChart"></canvas>
+                Likes Today:
+                <canvas ref="firstChart"></canvas>
+                Likes All Times:
+                <canvas ref="secondChart"></canvas>
             </div>);
     }
 }
