@@ -37,7 +37,7 @@ export default class App extends React.Component {
       appId="501738386867737"
       autoLoad={true}
       fields="name,email,picture"
-      scope="read_custom_friendlists"
+      scope="user_friends"
       callback={this.facebookResponse.bind(this)} />);
   }
 
