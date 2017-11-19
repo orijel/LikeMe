@@ -1,56 +1,50 @@
 import React from 'react';
 import Chart from 'chart.js'
 import FacebookLogin from 'react-facebook-login';
+import { BrowserRouter as Router, Route, Link, withRouter, Switch } from 'react-router-dom';
+import { browserHistory, Redirect } from "react-router";
+import MainPage from "./MainPage.jsx";
 
 export default class App extends React.Component {
-    constructor(props) {
-        super(props);
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoggedIn: false,
+      userId: null
     }
+    console.log('hi app');
+  }
 
-    componentDidMount() {
-        var ctx = this.refs.myChart.getContext('2d');
-        var chart = new Chart(ctx, {
-            // The type of chart we want to create
-            type: 'line',
+  componentDidMount() {
+    console.log('hi app');
+  }
 
-            // The data for our dataset
-            data: {
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
-                datasets: [{
-                    label: "My First dataset",
-                    backgroundColor: 'rgb(255, 99, 132)',
-                    borderColor: 'rgb(255, 99, 132)',
-                    data: [0, 10, 5, 2, 20, 30, 45],
-                }]
-            },
-
-            // Configuration options go here
-            options: {}
-        });
+  facebookResponse(response) {
+    console.log(this);
+    if (response.userID) {
+      this.setState({
+        isLoggedIn: true,
+        userId: response.userID
+      });
     }
-    responseFacebook(response) {
-        console.log(response);
-        FB.api(
-            `/${response.id}/friends`,
-            function (response) {
-                if (response && !response.error) {
-                    console.log(response);
-                }
-            }
-        );
+  }
 
+  getContent() {
+    if (this.state.isLoggedIn) {
+      return (<MainPage />);
     }
-    render() {
-        return (
-            <div style={{ textAlign: 'center' }}>
-                <FacebookLogin
-                    appId=""
-                    autoLoad={true}
-                    fields="name,email,picture"
-                    callback={this.responseFacebook} />
-                <canvas ref="myChart" id="myChart"></canvas>
-                <h1>Hello World</h1>
-            </div>);
-    }
+    else return (<FacebookLogin
+      appId="501738386867737"
+      autoLoad={true}
+      fields="name,email,picture"
+      scope="read_custom_friendlists"
+      callback={this.facebookResponse.bind(this)} />);
+  }
+
+  render() {
+    return (
+      <div style={{ textAlign: 'center' }}>
+        {this.getContent()}
+      </div>);
+  }
 }
