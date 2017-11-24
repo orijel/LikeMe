@@ -1,11 +1,21 @@
 import React from 'react';
 import Chart from 'chart.js'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import Friends from "./Friends.jsx";
 
 export default class MainPage extends React.Component {
     constructor(props) {
         super(props);
-        console.log('hi main');
+        console.log(props);
+        this.state = {
+            friends: []
+        };
+        FB.api(`/${this.props.user.id}/friends`, 'GET', {}, (response) => {
+            console.log(response.data)
+            this.setState({
+                friends: response.data
+            });
+        });
     }
 
     generateRandomArray() {
@@ -13,7 +23,6 @@ export default class MainPage extends React.Component {
         for (var i = 0; i < 4; i++) {
             array.push(Math.floor((Math.random() * 100)));
         }
-        console.log(array);
         return array;
     }
 
@@ -87,13 +96,31 @@ export default class MainPage extends React.Component {
             options: { legend: { display: false } }
         });
     }
+
+    renderFriends() {
+        if (this.state.friends.length > 0) {
+            return (
+                <Friends friends={this.state.friends} />
+            )
+        }
+    }
     render() {
         return (
             <div>
-                Likes Today:
-                <canvas ref="firstChart"></canvas>
-                Likes All Times:
-                <canvas ref="secondChart"></canvas>
+                <div>
+                    <img src={this.props.user.picture.data.url} />
+                    <span>
+                        {this.props.user.name}
+                    </span>
+                </div>
+                <div>
+                    Likes Today:
+                    <canvas ref="firstChart"></canvas>
+                    Likes All Times:
+                    <canvas ref="secondChart"></canvas>
+                    {this.renderFriends()}
+
+                </div>
             </div>);
     }
 }

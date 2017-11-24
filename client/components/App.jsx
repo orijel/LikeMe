@@ -6,45 +6,42 @@ import { browserHistory, Redirect } from "react-router";
 import MainPage from "./MainPage.jsx";
 
 export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoggedIn: false,
-      userId: null
+    constructor(props) {
+        super(props);
+        this.state = {
+            isLoggedIn: false,
+            user: null
+        }
     }
-    console.log('hi app');
-  }
 
-  componentDidMount() {
-    console.log('hi app');
-  }
-
-  facebookResponse(response) {
-    console.log(this);
-    if (response.userID) {
-      this.setState({
-        isLoggedIn: true,
-        userId: response.userID
-      });
+    componentDidMount() {
     }
-  }
 
-  getContent() {
-    if (this.state.isLoggedIn) {
-      return (<MainPage />);
+    facebookResponse(response) {
+        if (response.userID) {
+            this.setState({
+                isLoggedIn: true,
+                user: response
+            });
+        }
     }
-    else return (<FacebookLogin
-      appId="501738386867737"
-      autoLoad={true}
-      fields="name,email,picture"
-      scope="user_friends"
-      callback={this.facebookResponse.bind(this)} />);
-  }
 
-  render() {
-    return (
-      <div style={{ textAlign: 'center' }}>
-        {this.getContent()}
-      </div>);
-  }
+    getContent() {
+        if (this.state.isLoggedIn) {
+            return (<MainPage user={this.state.user} />);
+        }
+        else return (<FacebookLogin
+            appId="501738386867737"
+            autoLoad={true}
+            fields="name,email,picture"
+            scope="user_friends"
+            callback={this.facebookResponse.bind(this)} />);
+    }
+
+    render() {
+        return (
+            <div style={{ textAlign: 'center' }}>
+                {this.getContent()}
+            </div>);
+    }
 }
