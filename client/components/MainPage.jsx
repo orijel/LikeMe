@@ -2,15 +2,20 @@ import React from 'react';
 import Chart from 'chart.js'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Friends from "./Friends.jsx";
+import store from "../store.jsx"
+
 
 export default class MainPage extends React.Component {
     constructor(props) {
         super(props);
-        console.log(props);
+        var storeState = store.getState();
         this.state = {
+            userId: storeState.loggedInUser.userId,
+            userName: storeState.loggedInUser.userName,
+            userPicture: storeState.loggedInUser.userPicture,
             friends: []
         };
-        FB.api(`/${this.props.user.id}/friends`, 'GET', {}, (response) => {
+        FB.api(`/${this.state.userId}/friends`, 'GET', {}, (response) => {
             console.log(response.data)
             this.setState({
                 friends: response.data
@@ -108,9 +113,9 @@ export default class MainPage extends React.Component {
         return (
             <div>
                 <div>
-                    <img src={this.props.user.picture.data.url} />
+                    <img src={this.state.userPicture} />
                     <span>
-                        {this.props.user.name}
+                        {this.state.userName}
                     </span>
                 </div>
                 <div>

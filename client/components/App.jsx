@@ -4,6 +4,8 @@ import FacebookLogin from 'react-facebook-login';
 import { BrowserRouter as Router, Route, Link, withRouter, Switch } from 'react-router-dom';
 import { browserHistory, Redirect } from "react-router";
 import MainPage from "./MainPage.jsx";
+import store from "../store.jsx"
+import { loginWithUser } from "../actions/UserActions.jsx"
 
 export default class App extends React.Component {
     constructor(props) {
@@ -19,6 +21,7 @@ export default class App extends React.Component {
 
     facebookResponse(response) {
         if (response.userID) {
+            store.dispatch(loginWithUser(response.id, response.name, response.picture.data.url))
             this.setState({
                 isLoggedIn: true,
                 user: response
@@ -28,7 +31,7 @@ export default class App extends React.Component {
 
     getContent() {
         if (this.state.isLoggedIn) {
-            return (<MainPage user={this.state.user} />);
+            return (<MainPage />);
         }
         else return (<FacebookLogin
             appId="501738386867737"
