@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactTooltip from 'react-tooltip'
+import store from "../store.jsx"
+import { changeViewUser } from "../actions/UserActions.jsx";
 
 export default class Friend extends React.Component {
     constructor(props) {
@@ -21,10 +23,14 @@ export default class Friend extends React.Component {
 
     render() {
         return (
-            <div>
-                <img data-tip={this.state.name} src={this.state.image}/>
+            <div onClick={this.onFriendClicked.bind(this)}>
+                <img data-tip={this.state.name} src={this.state.image} />
                 <ReactTooltip />
             </div>
         );
+    }
+
+    onFriendClicked() {
+        store.dispatch(changeViewUser(this.props.friend.id));
     }
 }
