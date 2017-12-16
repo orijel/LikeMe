@@ -6,12 +6,13 @@ import axios from 'axios';
 import Friends from "./Friends.jsx";
 import AllLikes from "./AllLikes.jsx";
 import store from "../store.jsx";
+import config from "../config.json";
 
 export default class MainPage extends React.Component {
     constructor(props) {
         super(props);
         const self = this;
-        axios.get("http://localhost:3006/like").then((likes) => {
+        axios.get(`${config.serverUrl}/like`).then((likes) => {
             self.setState({
                 likes: likes.data
             });

@@ -3,6 +3,7 @@ import Chart from 'chart.js';
 import axios from 'axios';
 import _ from 'lodash';
 import store from "../store.jsx"
+import config from "../config.json";
 
 export default class AllLikes extends React.Component {
     constructor(props) {
@@ -23,7 +24,7 @@ export default class AllLikes extends React.Component {
     }
 
     updateUserGraph(viewUserId) {
-        axios.get(`http://localhost:3006/user/allLikes?userId=${viewUserId}`).then((response) => {
+        axios.get(`${config.serverUrl}/user/allLikes?userId=${viewUserId}`).then((response) => {
             const likesData = this.props.likes.map((like) => {
                 const matchingLikeData = _.find(response.data, {
                     _id: like._id
