@@ -7,13 +7,18 @@ async function getUserLikes(userId) {
 async function addUserLike(executingUserId, targetUserId, likeId) {
     await userDataAccess.addUserLike({
         executingUserId,
-        targetUserId, 
-        likeId, 
+        targetUserId,
+        likeId,
         updateTime: new Date()
     });
 };
 
+async function getUserLikeInDateRange(userId, startDate, endDate, intervalInHours) {
+    return await userDataAccess.getUserLikeInDateRange(userId, startDate, endDate, intervalInHours);
+}
+
 module.exports = {
     getUserLikes,
-    addUserLike
+    addUserLike,
+    getUserLikeInDateRange
 };
