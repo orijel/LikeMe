@@ -1,14 +1,22 @@
 import { ACTION, changeViewUser } from '../actions/UserActions.jsx';
 import React from 'react';
-import Chart from 'chart.js'
+import Chart from 'chart.js';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import axios from 'axios';
 import Friends from "./Friends.jsx";
-import store from "../store.jsx"
-
+import AllLikes from "./AllLikes.jsx";
+import store from "../store.jsx";
 
 export default class MainPage extends React.Component {
     constructor(props) {
         super(props);
+        const self = this;
+        axios.get("http://localhost:3006/like").then((likes) => {
+            self.setState({
+                likes: likes.data
+            });
+        });
+
         var storeState = store.getState();
         store.subscribe(() => {
             const storeState = store.getState();
@@ -21,7 +29,8 @@ export default class MainPage extends React.Component {
             viewUserId: storeState.viewUserId,
             viewUserName: storeState.loggedInUser.userName,
             viewUserPicture: storeState.loggedInUser.userPicture,
-            friends: []
+            friends: [],
+            likes: []
         };
     }
 
@@ -95,25 +104,6 @@ export default class MainPage extends React.Component {
             // Configuration options go here
             options: {}
         });
-
-        var ctx = this.refs.secondChart.getContext('2d');
-        var chart = new Chart(ctx, {
-            // The type of chart we want to create
-            type: 'radar',
-
-            // The data for our dataset
-            data: {
-                labels: ["😂", "😎", "🤓", "😇", "😘"],
-                datasets: [{
-                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                    borderColor: 'rgb(255, 99, 132)',
-                    data: this.generateRandomArray()
-                }]
-            },
-
-            // Configuration options go here
-            options: { legend: { display: false } }
-        });
     }
 
     navigateToMyProfile() {
@@ -146,10 +136,8 @@ export default class MainPage extends React.Component {
                 <div>
                     Likes Today:
                     <canvas ref="firstChart"></canvas>
-                    Likes All Times:
-                    <canvas ref="secondChart"></canvas>
+                    <AllLikes likes={this.state.likes} />
                     {this.renderFriends()}
-
                 </div>
             </div>);
     }
