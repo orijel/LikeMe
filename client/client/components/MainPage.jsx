@@ -64,6 +64,12 @@ export default class MainPage extends React.Component {
         }
     }
 
+    renderReactions() {
+        if (this.state.viewUserId !== this.state.userId) {
+            return (<UserReactions likes={this.state.likes} />);
+        }
+    }
+
     render() {
         return (
             <div>
@@ -79,7 +85,7 @@ export default class MainPage extends React.Component {
                         {this.state.viewUserName}
                     </span>
                 </div>
-                <UserReactions likes={this.state.likes} />
+                {this.renderReactions()}
                 <div>
                     <LikesOverTime likes={this.state.likes} />
                     <AllLikes likes={this.state.likes} />
