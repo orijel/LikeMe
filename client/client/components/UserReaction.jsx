@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactTooltip from 'react-tooltip'
 import store from "../store.jsx"
-import { changeViewUser } from "../actions/UserActions.jsx";
+import { updateLikes } from "../actions/UserActions.jsx";
 import axios from "axios";
 import config from "../config.json";
 import moment from "moment"
@@ -61,7 +61,8 @@ export default class UserReaction extends React.Component {
             executingUserId: storeState.loggedInUser.userId,
             targetUserId: storeState.viewUserId,
             likeId: this.props.like._id
+        }).then(() => {
+            store.dispatch(updateLikes());
         });
-        // store.dispatch(changeViewUser(this.props.friend.id));
     }
 }
