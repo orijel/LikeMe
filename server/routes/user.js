@@ -24,4 +24,13 @@ router.get('/likesByDateRange', async (req, res) => {
     res.send(data);
 });
 
+router.get('/reaction', async (req, res) => {
+    const userId = req.query.userId;
+    const targetUserId = req.query.targetUserId;
+    const likeId = req.query.likeId;
+    const fromDate = req.query.fromDate
+    const data = await userModel.getUserReaction(userId, targetUserId, likeId, fromDate);
+    res.send(data);
+});
+
 module.exports = router;

@@ -56,8 +56,20 @@ async function getUserLikeInDateRange(userId, startDate, endDate, intervalInHour
     return await getDbCollection().aggregate(query).toArray();
 }
 
+async function getUserReaction(userId, targetUserId, likeId, fromDate) {
+    return await getDbCollection().find({
+        "executingUserId": userId,
+        "targetUserId": targetUserId,
+        "likeId": likeId,
+        "updateTime": {
+            $gt: new Date(Date.parse(fromDate))
+        }
+    }).toArray();
+}
+
 module.exports = {
     getUserLikes,
     addUserLike,
-    getUserLikeInDateRange
+    getUserLikeInDateRange,
+    getUserReaction
 };

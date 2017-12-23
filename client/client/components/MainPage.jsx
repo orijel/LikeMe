@@ -6,6 +6,7 @@ import axios from 'axios';
 import Friends from "./Friends.jsx";
 import AllLikes from "./AllLikes.jsx";
 import LikesOverTime from "./LikesOverTime.jsx";
+import UserReactions from "./UserReactions.jsx";
 import store from "../store.jsx";
 import config from "../config.json";
 
@@ -78,6 +79,7 @@ export default class MainPage extends React.Component {
                         {this.state.viewUserName}
                     </span>
                 </div>
+                <UserReactions likes={this.state.likes} />
                 <div>
                     <LikesOverTime likes={this.state.likes} />
                     <AllLikes likes={this.state.likes} />
