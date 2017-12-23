@@ -31,7 +31,7 @@ export default class LikesOverTime extends React.Component {
     updateUserGraph(viewUserId) {
         const dateFormat = 'YYYY-MM-DD';
         const startDate = moment().subtract(1, 'day').format(dateFormat);
-        const endDate = moment().format(dateFormat);
+        const endDate = moment().add(1, 'day').format(dateFormat);
         const intervalInHours = 6;
         const url = `${config.serverUrl}/user/likesByDateRange?userId=${viewUserId}&startDate=${startDate}&endDate=${endDate}&intervalInHours=${intervalInHours}`;
 
