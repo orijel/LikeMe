@@ -39,7 +39,10 @@ export default class AllLikes extends React.Component {
 
     renderGraph() {
         var ctx = this.refs.chart.getContext('2d');
-        var chart = new Chart(ctx, {
+        if (this.chart) {
+            this.chart.destroy();
+        }
+        this.chart = new Chart(ctx, {
             // The type of chart we want to create
             type: 'radar',
 

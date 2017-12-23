@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import axios from 'axios';
 import Friends from "./Friends.jsx";
 import AllLikes from "./AllLikes.jsx";
+import LikesOverTime from "./LikesOverTime.jsx";
 import store from "../store.jsx";
 import config from "../config.json";
 
@@ -46,65 +47,8 @@ export default class MainPage extends React.Component {
         });
     }
 
-    generateRandomArray() {
-        var array = [];
-        for (var i = 0; i < 4; i++) {
-            array.push(Math.floor((Math.random() * 100)));
-        }
-        return array;
-    }
-
-    generateRandomNumber() {
-        return Math.floor((Math.random() * 100));
-    }
-
     componentDidMount() {
         this.updateViewUser(this.state.viewUserId);
-        var ctx = this.refs.firstChart.getContext('2d');
-        var chart = new Chart(ctx, {
-            // The type of chart we want to create
-            type: 'line',
-
-            // The data for our dataset
-            data: {
-                labels: ["morning", "noon", "afternoon", "evening"],
-                datasets: [{
-                    fill: false,
-                    label: "😂",
-                    backgroundColor: 'rgb(255, 99, 132)',
-                    borderColor: 'rgb(255, 99, 132)',
-                    data: this.generateRandomArray(),
-                },
-                {
-                    fill: false,
-                    label: "😎",
-                    backgroundColor: 'rgb(0, 0, 255)',
-                    borderColor: 'rgb(0, 0, 255)',
-                    data: this.generateRandomArray(),
-                }, {
-                    fill: false,
-                    label: "🤓",
-                    backgroundColor: 'rgb(255, 255, 0)',
-                    borderColor: 'rgb(255, 255, 0)',
-                    data: this.generateRandomArray(),
-                }, {
-                    fill: false,
-                    label: "😇",
-                    backgroundColor: 'rgb(0, 102, 102)',
-                    borderColor: 'rgb(0, 102, 102)',
-                    data: this.generateRandomArray(),
-                }, {
-                    fill: false,
-                    label: "😘",
-                    backgroundColor: 'rgb(204, 0, 153)',
-                    borderColor: 'rgb(204, 0, 153)',
-                    data: this.generateRandomArray(),
-                }]
-            },
-
-            // Configuration options go here
-            options: {}
-        });
     }
 
     navigateToMyProfile() {
@@ -135,8 +79,7 @@ export default class MainPage extends React.Component {
                     </span>
                 </div>
                 <div>
-                    Likes Today:
-                    <canvas ref="firstChart"></canvas>
+                    <LikesOverTime likes={this.state.likes} />
                     <AllLikes likes={this.state.likes} />
                     {this.renderFriends()}
                 </div>

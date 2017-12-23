@@ -32,14 +32,15 @@ async function getUserLikeInDateRange(userId, startDate, endDate, intervalInHour
             $match: {
                 targetUserId: userId,
                 updateTime: {
-                    $gt: new Date(2017,10,10).toISOString(),
-                    $lt: new Date().toISOString()
+                    $gt: new Date(Date.parse(startDate)),
+                    $lt: new Date(Date.parse(endDate))
                 }
             }
         },
         {
             $group: {
                 _id: {
+                    likeId: "$likeId",
                     "interval": {
                         "$subtract": [
                             { "$hour": "$updateTime" },
@@ -52,7 +53,6 @@ async function getUserLikeInDateRange(userId, startDate, endDate, intervalInHour
 
         }
     ];
-    console.log(query);
     return await getDbCollection().aggregate(query).toArray();
 }
 
