@@ -23,6 +23,10 @@ export default class AllLikes extends React.Component {
         this.renderGraph()
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        return this.state.data !== nextState.data;
+    }
+
     updateUserGraph(viewUserId) {
         axios.get(`${config.serverUrl}/user/allLikes?userId=${viewUserId}`).then((response) => {
             const likesData = this.props.likes.map((like) => {

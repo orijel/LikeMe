@@ -24,6 +24,10 @@ export default class LikesOverTime extends React.Component {
         this.renderGraph()
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        return this.state.data !== nextState.data;
+    }
+
     updateUserGraph(viewUserId) {
         const dateFormat = 'YYYY-MM-DD';
         const startDate = moment().subtract(1, 'day').format(dateFormat);
