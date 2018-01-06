@@ -4,7 +4,7 @@ import Friend from "./Friend.jsx";
 export default class Friends extends React.Component {
     constructor(props) {
         super(props);
-        
+
     }
 
     componentDidMount() {
@@ -14,7 +14,7 @@ export default class Friends extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="friends">
                 {this.props.friends.map(friend => {
                     return (
                         <Friend key={friend.id} friend={friend} />

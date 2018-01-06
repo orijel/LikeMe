@@ -39,11 +39,16 @@ export default class MainPage extends React.Component {
 
     updateViewUser(viewUserId) {
         FB.api(`/${viewUserId}?fields=id,picture,name,friends`, 'GET', {}, (response) => {
-            this.setState({
-                viewUserId: viewUserId,
-                viewUserName: response.name,
-                viewUserPicture: response.picture.data.url,
-                friends: response.friends.data
+            this.setState((prevState) => {
+                const result = {
+                    viewUserId: viewUserId,
+                    viewUserName: response.name,
+                    viewUserPicture: response.picture.data.url,
+                }
+                if (response.friends) {
+                    result.friends = response.friends.data
+                }
+                return result;
             });
         });
     }

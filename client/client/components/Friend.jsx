@@ -23,10 +23,10 @@ export default class Friend extends React.Component {
 
     render() {
         return (
-            <div>
-                <img data-tip={this.state.name} src={this.state.image} onClick={this.onFriendClicked.bind(this)} />
+            <span className="friend">
+                <img width="100" data-tip={this.state.name} src={this.state.image} onClick={this.onFriendClicked.bind(this)} />
                 <ReactTooltip />
-            </div>
+            </span>
         );
     }
 

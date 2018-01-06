@@ -15,7 +15,7 @@ body {
 
 #root {
     background: white;
-    margin-top: 10px;
+    margin: 10px 0;
 }
 
 .login-page {
@@ -66,4 +66,15 @@ body {
 
 .all-likes {
     margin-top: $margin-top;
+}
+
+.friends {
+    margin-top: $margin-top;
+}
+
+.friend {
+    margin: 0 5px;
+    >img {
+        cursor: pointer;
+    }
 }
