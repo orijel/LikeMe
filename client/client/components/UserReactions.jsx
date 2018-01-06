@@ -11,7 +11,7 @@ export default class UserReactions extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="btn-group" role="group" style={{ marginTop: '30px' }}>
                 {this.props.likes.map(like => {
                     return (
                         <UserReaction key={like._id} like={like} />

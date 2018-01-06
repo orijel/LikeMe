@@ -64,28 +64,23 @@ export default class MainPage extends React.Component {
         }
     }
 
-    renderReactions() {
-        if (this.state.viewUserId !== this.state.userId) {
-            return (<UserReactions likes={this.state.likes} />);
-        }
-    }
-
     render() {
         return (
             <div>
-                <div style={{ background: 'grey' }} onClick={this.navigateToMyProfile.bind(this)}>
-                    <img src={this.state.userPicture} />
-                    <span>
+                <h1 className="app-title">LikeMe</h1>
+                <div className="profile-header my-profile-toolbar">
+                    <img src={this.state.userPicture} onClick={this.navigateToMyProfile.bind(this)} />
+                    <div className="user-name">
                         {this.state.userName}
-                    </span>
+                    </div>
                 </div>
-                <div>
+                <div className="profile-header display-user-toolbar">
                     <img src={this.state.viewUserPicture} />
-                    <span>
+                    <div className="user-name">
                         {this.state.viewUserName}
-                    </span>
+                    </div>
                 </div>
-                {this.renderReactions()}
+                <UserReactions likes={this.state.likes} />
                 <div>
                     <LikesOverTime likes={this.state.likes} />
                     <AllLikes likes={this.state.likes} />

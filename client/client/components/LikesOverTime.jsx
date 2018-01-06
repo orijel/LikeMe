@@ -80,19 +80,25 @@ export default class LikesOverTime extends React.Component {
 
             // The data for our dataset
             data: {
-                labels: ["morning", "noon", "afternoon", "evening"],
+                labels: ["00:00-6:00", "6:00-12:00", "12:00-18:00", "18:00-00:00"],
                 datasets: this.state.data
             },
 
             // Configuration options go here
-            options: {}
+            options: {
+                legend: {
+                    labels: {
+                        fontSize: 20
+                    }
+                }
+            }
         });
     }
 
     render() {
         return (
-            <div>
-                Likes Today:
+            <div className="likes-today">
+                <h2>Likes Today</h2>
                 <canvas ref="chart"></canvas>
             </div>
         );

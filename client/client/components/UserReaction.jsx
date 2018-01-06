@@ -11,12 +11,13 @@ export default class UserReaction extends React.Component {
         super(props);
         var storeState = store.getState();
         this.updateReaction(storeState.loggedInUser.userId, storeState.viewUserId);
-        store.subscribe(() => {
+        this.storeSubscribtion = store.subscribe(() => {
             const storeState = store.getState();
             this.updateReaction(storeState.loggedInUser.userId, storeState.viewUserId);
         });
         this.state = {
-            isEnabled: true
+            isEnabled: true,
+            isLoggedInUser: storeState.loggedInUser.userId === storeState.viewUserId
         };
     }
 
@@ -27,27 +28,47 @@ export default class UserReaction extends React.Component {
             const reactions = response.data;
             const isEnabled = reactions.length == 0;
             this.setState({
-                isEnabled
+                isEnabled,
+                isLoggedInUser: userId === viewUserId
             });
         })
     }
 
-    componentDidMount() { }
+    componentDidMount() {
+
+    }
+
+    componentWillUnmount() {
+        this.storeSubscribtion();
+    }
 
     renderReactionButton() {
+        if (this.state.isLoggedInUser) {
+            return (
+                <button type="button" className="btn btn-light" style={{ cursor: 'initial' }} data-tip={this.props.like.description}>
+                    {this.props.like.content}
+                    <ReactTooltip />
+                </button>
+            )
+        }
         if (this.state.isEnabled) {
-            return (<button data-tip={this.props.like.description} onClick={this.onReactionClicked.bind(this)}>{this.props.like.content} +1</button>);
+            return (
+                <button type="button" className="btn btn-primary" data-tip={this.props.like.description} onClick={this.onReactionClicked.bind(this)}>
+                    {this.props.like.content} +1
+                    <ReactTooltip />
+                </button>);
         } else {
-            return (<button disabled data-tip={this.props.like.description}>{this.props.like.content} +1</button>);
+            return (
+                <button type="button" className="btn btn-primary" disabled data-tip={this.props.like.description}>
+                    {this.props.like.content} +1
+                    <ReactTooltip />
+                </button>);
         }
     }
 
     render() {
         return (
-            <div>
-                {this.renderReactionButton()}
-                <ReactTooltip />
-            </div>
+            this.renderReactionButton()
         );
     }
 

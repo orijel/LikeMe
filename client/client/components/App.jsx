@@ -4,8 +4,9 @@ import FacebookLogin from 'react-facebook-login';
 import { BrowserRouter as Router, Route, Link, withRouter, Switch } from 'react-router-dom';
 import { browserHistory, Redirect } from "react-router";
 import MainPage from "./MainPage.jsx";
-import store from "../store.jsx"
-import { loginWithUser } from "../actions/UserActions.jsx"
+import store from "../store.jsx";
+import { loginWithUser } from "../actions/UserActions.jsx";
+require('./styles.scss');
 
 export default class App extends React.Component {
     constructor(props) {
@@ -33,12 +34,18 @@ export default class App extends React.Component {
         if (this.state.isLoggedIn) {
             return (<MainPage />);
         }
-        else return (<FacebookLogin
-            appId="501738386867737"
-            autoLoad={true}
-            fields="name,email,picture"
-            scope="user_friends"
-            callback={this.facebookResponse.bind(this)} />);
+        else return (
+            <div className="login-page">
+                <div className="login-header">
+                    <span>LikeMe 😇😂😘😎🤓</span>
+                </div>
+                <FacebookLogin
+                    appId="501738386867737"
+                    autoLoad={true}
+                    fields="name,email,picture"
+                    scope="user_friends"
+                    callback={this.facebookResponse.bind(this)} />
+            </div>);
     }
 
     render() {

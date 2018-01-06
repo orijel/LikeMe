@@ -63,14 +63,21 @@ export default class AllLikes extends React.Component {
             },
 
             // Configuration options go here
-            options: { legend: { display: false } }
+            options: {
+                legend: { display: false },
+                scale: {
+                    pointLabels: {
+                        fontSize: 20
+                    }
+                }
+            }
         });
     }
 
     render() {
         return (
-            <div>
-                Likes All Times:
+            <div className="all-likes">
+                <h2>Likes All Times</h2>
                 <canvas ref="chart"></canvas>
             </div>
         );
